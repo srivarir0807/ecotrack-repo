@@ -20,32 +20,18 @@
 
     $sql = "INSERT INTO informations (name, sentence, gender, drink) 
             VALUES (?, ?, ?, ?)";
-       
+           
+    $stmt = mysqli_stmt_init($conn);
+    
+    if ( ! mysqli_stmt_prepare($stmt, $sql)) {
+       die(mysqli_error($conn));
+    }
+    
+    mysqli_stmt_bind_param($stmt, "ssss",
+                          $name,
+                          $sentence,
+                          $gender,
+                          $drink);
 
-
-
-$stmt = mysqli_stmt_init($conn);
-
-
-
-if ( ! mysqli_stmt_prepare($stmt, $sql)) {
-
-
-   die(mysqli_error($conn));
-}
-
-
-
-mysqli_stmt_bind_param($stmt, "ssss",
-                      $name,
-                      $sentence,
-                      $gender,
-                      $drink);
-
-
-
-mysqli_stmt_execute($stmt);
-
-
-
-exit;
+    mysqli_stmt_execute($stmt);
+    exit();
