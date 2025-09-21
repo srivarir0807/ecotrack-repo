@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <!--<link rel="stylesheet" href="https://unpkg.com/bamboo.css/dist/dark.min.css">-->
+    <style>
+        .radio-group label {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <form action="process-form.php" id="myForm">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name"placeholder="Enter Your Name"> <br><br>
+        <label for="sentence" >Random Sentence</label>
+        <input type="text" name="random" placeholder ="Enter any random sentence"><br><br>
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select><br><br>
+        <label for="drink">Preferred Drink</label>
+        <div class="radio-group" name="drink">
+            <label><input type="radio" name="drink" value="coffee"> Coffee</label>
+            <label><input type="radio" name="drink" value="tea"> Tea</label>
+            <label><input type="radio" name="drink" value="milk"> Milk</label>
+            <label><input type="radio" name="drink" value="others"> Others</label>
+        </div>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+     <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('process-form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Record saved.');
+                // Optionally, reset the form:
+                document.getElementById('myForm').reset();
+            })
+            .catch(error => {
+                alert('Error saving record.');
+            });
+        });
+    </script>
+</body>
+</html>
